@@ -6,7 +6,21 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static excelian.maze.Maze.FINISH;
+import static excelian.maze.Maze.SPACE;
+import static excelian.maze.Maze.START;
+
 public class Explorer {
+
+    private static final char FORWARD = 'F';
+    private static final char BACKWARD = 'B';
+    private static final char LEFT = 'L';
+    private static final char RIGHT = 'R';
+
+    static final char NORTH = 'N';
+    static final char WEST = 'W';
+    static final char EAST = 'E';
+    static final char SOUTH = 'S';
 
     private List<Character> movement = new ArrayList<>();
     private Maze maze;
@@ -14,7 +28,7 @@ public class Explorer {
     private int currY;
     private char orientation;
 
-    public static Logger logger = Logger.getLogger(Explorer.class);
+    private static Logger logger = Logger.getLogger(Explorer.class);
 
     public Explorer(Maze maze) {
         this.maze = maze;
@@ -23,13 +37,13 @@ public class Explorer {
     public void exploreMaze() {
         start();
         boolean reverse = false;
-        while (getCharAtFront() != 'F') {
-            if (getCharAtFront() == ' ' && !reverse) {
+        while (getCharAtFront() != FINISH) {
+            if (getCharAtFront() == SPACE && !reverse) {
                 moveForward();
-            } else if (getCharAtLeft() == ' ') {
+            } else if (getCharAtLeft() == SPACE) {
                 turnLeft();
                 reverse = false;
-            } else if (getCharAtRight() == ' ') {
+            } else if (getCharAtRight() == SPACE) {
                 turnRight();
                 reverse = false;
             } else {
@@ -44,33 +58,33 @@ public class Explorer {
     public void start() {
         Coordinates coordinates = maze.getStartCoordinates();
         moveTo(coordinates);
-        orientation = 'E';
+        orientation = EAST;
         logger.debug("starting point");
-        movement.add('S');
+        movement.add(START);
     }
 
     public void moveForward() {
         moveTo(getForwardCoordinates());
         logger.debug("moving forward");
-        movement.add('F');
+        movement.add(FORWARD);
     }
 
     public void moveBackward() {
         moveTo(getBackwardCoordinates());
         logger.debug("moving backward");
-        movement.add('B');
+        movement.add(BACKWARD);
     }
 
     public void turnLeft() {
-        orientation = turn('L');
+        orientation = turn(LEFT);
         logger.debug("turning left");
-        movement.add('L');
+        movement.add(LEFT);
     }
 
     public void turnRight() {
-        orientation = turn('R');
+        orientation = turn(RIGHT);
         logger.debug("turning right");
-        movement.add('R');
+        movement.add(RIGHT);
     }
 
     public char getCharAtFront() {
@@ -117,17 +131,17 @@ public class Explorer {
     }
 
     private char turn(char towards) {
-        if (orientation == 'N') {
-            return towards == 'L' ? 'W' : 'E';
+        if (orientation == NORTH) {
+            return towards == LEFT ? WEST : EAST;
         }
-        if (orientation == 'E') {
-            return towards == 'L' ? 'N' : 'S';
+        if (orientation == EAST) {
+            return towards == LEFT ? NORTH : SOUTH;
         }
-        if (orientation == 'W') {
-            return towards == 'L' ? 'S' : 'N';
+        if (orientation == WEST) {
+            return towards == LEFT ? SOUTH : NORTH;
         }
-        if (orientation == 'S') {
-            return towards == 'L' ? 'E' : 'W';
+        if (orientation == SOUTH) {
+            return towards == LEFT ? EAST : WEST;
         }
         return 'E';
     }
@@ -138,64 +152,64 @@ public class Explorer {
     }
 
     private Coordinates getForwardCoordinates() {
-        if (orientation == 'N') {
+        if (orientation == NORTH) {
             return decreaseX();
         }
-        if (orientation == 'E') {
+        if (orientation == EAST) {
             return increaseY();
         }
-        if (orientation == 'W') {
+        if (orientation == WEST) {
             return decreaseY();
         }
-        if (orientation == 'S') {
+        if (orientation == SOUTH) {
             return increaseX();
         }
         return new Coordinates(currX, currY);
     }
 
     private Coordinates getBackwardCoordinates() {
-        if (orientation == 'N') {
+        if (orientation == NORTH) {
             return increaseX();
         }
-        if (orientation == 'E') {
+        if (orientation == EAST) {
             return decreaseY();
         }
-        if (orientation == 'W') {
+        if (orientation == WEST) {
             return increaseY();
         }
-        if (orientation == 'S') {
+        if (orientation == SOUTH) {
             return decreaseX();
         }
         return new Coordinates(currX, currY);
     }
 
     private Coordinates getRightCoordinates() {
-        if (orientation == 'W') {
+        if (orientation == WEST) {
             return decreaseX();
         }
-        if (orientation == 'N') {
+        if (orientation == NORTH) {
             return increaseY();
         }
-        if (orientation == 'S') {
+        if (orientation == SOUTH) {
             return decreaseY();
         }
-        if (orientation == 'E') {
+        if (orientation == EAST) {
             return increaseX();
         }
         return new Coordinates(currX, currY);
     }
 
     private Coordinates getLeftCoordinates() {
-        if (orientation == 'W') {
+        if (orientation == WEST) {
             return increaseX();
         }
-        if (orientation == 'N') {
+        if (orientation == NORTH) {
             return decreaseY();
         }
-        if (orientation == 'S') {
+        if (orientation == SOUTH) {
             return increaseY();
         }
-        if (orientation == 'E') {
+        if (orientation == EAST) {
             return decreaseX();
         }
         return new Coordinates(currX, currY);

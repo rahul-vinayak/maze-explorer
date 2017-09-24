@@ -3,7 +3,8 @@ package excelian.maze;
 import org.junit.Before;
 import org.junit.Test;
 
-import static org.junit.Assert.*;
+import static excelian.maze.Maze.FINISH;
+import static org.junit.Assert.assertEquals;
 
 public class MazeTest {
 
@@ -28,7 +29,7 @@ public class MazeTest {
     private Maze maze;
 
     @Before
-    public void before(){
+    public void before() {
         maze = new Maze(mazeArr);
     }
 
@@ -44,7 +45,7 @@ public class MazeTest {
 
     @Test
     public void shouldGetCharAtCoord() {
-        assertEquals('F', maze.getCharAtCoord(new Coordinates(14,1)));
+        assertEquals(FINISH, maze.getCharAtCoord(new Coordinates(14, 1)));
     }
 
     @Test

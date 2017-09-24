@@ -5,6 +5,11 @@ import java.util.Arrays;
 
 public class Maze {
 
+    public static final char WALL = 'X';
+    public static final char SPACE = ' ';
+    public static final char START = 'S';
+    public static final char FINISH = 'F';
+
     private final char[][] maze;
 
     public Maze(char[][] maze) {
@@ -15,7 +20,7 @@ public class Maze {
         return (int) Arrays.stream(maze)
                 .map(CharBuffer::wrap)
                 .flatMapToInt(CharBuffer::chars)
-                .filter(i -> i == 'X')
+                .filter(i -> i == WALL)
                 .count();
     }
 
@@ -23,21 +28,20 @@ public class Maze {
         return (int) Arrays.stream(maze)
                 .map(CharBuffer::wrap)
                 .flatMapToInt(CharBuffer::chars)
-                .filter(i -> i == ' ')
+                .filter(i -> i == SPACE)
                 .count();
     }
 
-    public char getCharAtCoord(
-            Coordinates coordinates) {
+    public char getCharAtCoord(Coordinates coordinates) {
         return maze[coordinates.getX()][coordinates.getY()];
     }
 
     public Coordinates getStartCoordinates() {
-        return getCoordinatesFor('S');
+        return getCoordinatesFor(START);
     }
 
     public Coordinates getFinishCoordinates() {
-        return getCoordinatesFor('F');
+        return getCoordinatesFor(FINISH);
     }
 
     public int getMaxX() {

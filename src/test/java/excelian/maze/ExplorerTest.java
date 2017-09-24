@@ -2,6 +2,9 @@ package excelian.maze;
 
 import org.junit.Test;
 
+import static excelian.maze.Explorer.*;
+import static excelian.maze.Maze.SPACE;
+import static excelian.maze.Maze.WALL;
 import static org.junit.Assert.*;
 
 public class ExplorerTest {
@@ -30,147 +33,147 @@ public class ExplorerTest {
     @Test
     public void explorerShouldBeAtStartPosition() {
         explorer.start();
-        assertPosition('E', 3, 3);
+        assertPosition(EAST, 3, 3);
     }
 
     @Test
     public void shouldMoveForward() {
-        setExplorerPosition('N', 3, 3);
+        setExplorerPosition(NORTH, 3, 3);
         explorer.moveForward();
-        assertPosition('N', 2, 3);
+        assertPosition(NORTH, 2, 3);
 
-        setExplorerPosition('E', 3, 3);
+        setExplorerPosition(EAST, 3, 3);
         explorer.moveForward();
-        assertPosition('E', 3, 4);
+        assertPosition(EAST, 3, 4);
 
-        setExplorerPosition('W', 3, 3);
+        setExplorerPosition(WEST, 3, 3);
         explorer.moveForward();
-        assertPosition('W', 3, 2);
+        assertPosition(WEST, 3, 2);
 
-        setExplorerPosition('S', 3, 3);
+        setExplorerPosition(SOUTH, 3, 3);
         explorer.moveForward();
-        assertPosition('S', 4, 3);
+        assertPosition(SOUTH, 4, 3);
     }
 
     @Test
     public void shouldMoveBackward() {
-        setExplorerPosition('N', 3, 3);
+        setExplorerPosition(NORTH, 3, 3);
         explorer.moveBackward();
-        assertPosition('N', 4, 3);
+        assertPosition(NORTH, 4, 3);
 
-        setExplorerPosition('E', 3, 3);
+        setExplorerPosition(EAST, 3, 3);
         explorer.moveBackward();
-        assertPosition('E', 3, 2);
+        assertPosition(EAST, 3, 2);
 
-        setExplorerPosition('W', 3, 3);
+        setExplorerPosition(WEST, 3, 3);
         explorer.moveBackward();
-        assertPosition('W', 3, 4);
+        assertPosition(WEST, 3, 4);
 
-        setExplorerPosition('S', 3, 3);
+        setExplorerPosition(SOUTH, 3, 3);
         explorer.moveBackward();
-        assertPosition('S', 2, 3);
+        assertPosition(SOUTH, 2, 3);
     }
 
     @Test
     public void shouldNotMoveBeyondMazeBoundary() {
-        setExplorerPosition('E', 14, 14);
+        setExplorerPosition(EAST, 14, 14);
         explorer.moveForward();
-        assertPosition('E', 14, 14);
+        assertPosition(EAST, 14, 14);
 
-        setExplorerPosition('S', 14, 14);
+        setExplorerPosition(SOUTH, 14, 14);
         explorer.moveForward();
-        assertPosition('S', 14, 14);
+        assertPosition(SOUTH, 14, 14);
 
-        setExplorerPosition('N', 0, 0);
+        setExplorerPosition(NORTH, 0, 0);
         explorer.moveForward();
-        assertPosition('N', 0, 0);
+        assertPosition(NORTH, 0, 0);
 
-        setExplorerPosition('W', 0, 0);
+        setExplorerPosition(WEST, 0, 0);
         explorer.moveForward();
-        assertPosition('W', 0, 0);
+        assertPosition(WEST, 0, 0);
     }
 
     @Test
     public void shouldTurnLeft() {
-        setExplorerPosition('E', 3, 3);
+        setExplorerPosition(EAST, 3, 3);
         explorer.turnLeft();
-        assertPosition('N', 3, 3);
+        assertPosition(NORTH, 3, 3);
 
-        setExplorerPosition('N', 3, 3);
+        setExplorerPosition(NORTH, 3, 3);
         explorer.turnLeft();
-        assertPosition('W', 3, 3);
+        assertPosition(WEST, 3, 3);
 
-        setExplorerPosition('W', 3, 3);
+        setExplorerPosition(WEST, 3, 3);
         explorer.turnLeft();
-        assertPosition('S', 3, 3);
+        assertPosition(SOUTH, 3, 3);
 
-        setExplorerPosition('S', 3, 3);
+        setExplorerPosition(SOUTH, 3, 3);
         explorer.turnLeft();
-        assertPosition('E', 3, 3);
+        assertPosition(EAST, 3, 3);
     }
 
     @Test
     public void shouldTurnRight() {
-        setExplorerPosition('E', 3, 3);
+        setExplorerPosition(EAST, 3, 3);
         explorer.turnRight();
-        assertPosition('S', 3, 3);
+        assertPosition(SOUTH, 3, 3);
 
-        setExplorerPosition('S', 3, 3);
+        setExplorerPosition(SOUTH, 3, 3);
         explorer.turnRight();
-        assertPosition('W', 3, 3);
+        assertPosition(WEST, 3, 3);
 
-        setExplorerPosition('W', 3, 3);
+        setExplorerPosition(WEST, 3, 3);
         explorer.turnRight();
-        assertPosition('N', 3, 3);
+        assertPosition(NORTH, 3, 3);
 
-        setExplorerPosition('N', 3, 3);
+        setExplorerPosition(NORTH, 3, 3);
         explorer.turnRight();
-        assertPosition('E', 3, 3);
+        assertPosition(EAST, 3, 3);
     }
 
     @Test
     public void shouldGetCharAtFront() {
-        setExplorerPosition('E', 3, 4);
-        assertEquals(' ', explorer.getCharAtFront());
+        setExplorerPosition(EAST, 3, 4);
+        assertEquals(SPACE, explorer.getCharAtFront());
 
-        setExplorerPosition('S', 3, 4);
-        assertEquals('X', explorer.getCharAtFront());
+        setExplorerPosition(SOUTH, 3, 4);
+        assertEquals(WALL, explorer.getCharAtFront());
 
-        setExplorerPosition('W', 3, 4);
-        assertEquals('S', explorer.getCharAtFront());
+        setExplorerPosition(WEST, 3, 4);
+        assertEquals(SOUTH, explorer.getCharAtFront());
 
-        setExplorerPosition('N', 3, 4);
-        assertEquals('X', explorer.getCharAtFront());
+        setExplorerPosition(NORTH, 3, 4);
+        assertEquals(WALL, explorer.getCharAtFront());
     }
 
     @Test
     public void shouldGetCharAtRight() {
-        setExplorerPosition('W', 3, 4);
-        assertEquals('X', explorer.getCharAtRight());
+        setExplorerPosition(WEST, 3, 4);
+        assertEquals(WALL, explorer.getCharAtRight());
 
-        setExplorerPosition('S', 3, 4);
-        assertEquals('S', explorer.getCharAtRight());
+        setExplorerPosition(SOUTH, 3, 4);
+        assertEquals(SOUTH, explorer.getCharAtRight());
 
-        setExplorerPosition('E', 3, 4);
-        assertEquals('X', explorer.getCharAtRight());
+        setExplorerPosition(EAST, 3, 4);
+        assertEquals(WALL, explorer.getCharAtRight());
 
-        setExplorerPosition('N', 3, 4);
-        assertEquals(' ', explorer.getCharAtRight());
+        setExplorerPosition(NORTH, 3, 4);
+        assertEquals(SPACE, explorer.getCharAtRight());
     }
 
     @Test
     public void shouldGetCharAtLeft() {
-        setExplorerPosition('W', 3, 4);
-        assertEquals('X', explorer.getCharAtLeft());
+        setExplorerPosition(WEST, 3, 4);
+        assertEquals(WALL, explorer.getCharAtLeft());
 
-        setExplorerPosition('S', 3, 4);
-        assertEquals(' ', explorer.getCharAtLeft());
+        setExplorerPosition(SOUTH, 3, 4);
+        assertEquals(SPACE, explorer.getCharAtLeft());
 
-        setExplorerPosition('E', 3, 4);
-        assertEquals('X', explorer.getCharAtLeft());
+        setExplorerPosition(EAST, 3, 4);
+        assertEquals(WALL, explorer.getCharAtLeft());
 
-        setExplorerPosition('N', 3, 4);
-        assertEquals('S', explorer.getCharAtLeft());
+        setExplorerPosition(NORTH, 3, 4);
+        assertEquals(SOUTH, explorer.getCharAtLeft());
     }
 
     @Test
