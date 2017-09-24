@@ -1,32 +1,77 @@
 package excelian.maze;
 
+import org.apache.log4j.Logger;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
+
 public class Explorer {
 
-    private char[] movement;
+    private List<Character> movement = new ArrayList<>();
     private Maze maze;
     private int currX;
     private int currY;
     private char orientation;
 
-    public void exploreMaze(Maze maze) {
+    public static Logger logger = Logger.getLogger(Explorer.class);
+
+    public Explorer(Maze maze) {
         this.maze = maze;
-//        start();
-//        while (getCharInFront() != 'F') {
-//            if (getCharInFront() == ' ') {
-//                moveForward();
-//            }
-//
-//        }
+    }
+
+    public void exploreMaze() {
+        start();
+        boolean reverse = false;
+        while (getCharAtFront() != 'F') {
+            if (getCharAtFront() == ' ' && !reverse) {
+                moveForward();
+            } else if (getCharAtLeft() == ' ') {
+                turnLeft();
+                reverse = false;
+            } else if(getCharAtRight() == ' ') {
+                turnRight();
+                reverse = false;
+            } else {
+                reverse = true;
+                moveBackward();
+            }
+        }
+        logger.debug("Finished exploring");
+        movement.add('E');
     }
 
     public void start() {
         Coordinates coordinates = maze.getStartCoordinates();
         moveTo(coordinates);
+        logger.debug("starting point");
+        movement.add('S');
         orientation = 'E';
     }
 
     public void moveForward() {
+        logger.debug("moving forward");
+        movement.add('F');
         moveTo(getForwardCoordinates());
+    }
+
+    public void moveBackward() {
+        logger.debug("moving backward");
+        movement.add('B');
+        moveTo(getBackwardCoordinates());
+    }
+
+    public void turnLeft() {
+        logger.debug("turning left");
+        movement.add('L');
+        orientation = turn('L');
+    }
+
+    public void turnRight() {
+        logger.debug("turning right");
+        movement.add('R');
+        orientation = turn('R');
     }
 
     public char getCharAtFront() {
@@ -39,14 +84,6 @@ public class Explorer {
 
     public char getCharAtLeft() {
         return maze.getCharAtCoord(getLeftCoordinates());
-    }
-
-    public void turnLeft() {
-        orientation = turn('L');
-    }
-
-    public void turnRight() {
-        orientation = turn('R');
     }
 
     public int getCurrX() {
@@ -71,6 +108,13 @@ public class Explorer {
 
     public void setCurrX(int currX) {
         this.currX = currX;
+    }
+
+    public String getMovement() {
+        return movement
+                .stream()
+                .map(Object::toString)
+                .collect(Collectors.joining());
     }
 
     private char turn(char towards) {
@@ -106,6 +150,22 @@ public class Explorer {
         }
         if (orientation == 'S') {
             return increaseX();
+        }
+        return new Coordinates(currX, currY);
+    }
+
+    private Coordinates getBackwardCoordinates() {
+        if (orientation == 'N') {
+            return increaseX();
+        }
+        if (orientation == 'E') {
+            return decreaseY();
+        }
+        if (orientation == 'W') {
+            return increaseY();
+        }
+        if (orientation == 'S') {
+            return decreaseX();
         }
         return new Coordinates(currX, currY);
     }

@@ -1,6 +1,5 @@
 package excelian.maze;
 
-import org.junit.Before;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
@@ -26,12 +25,7 @@ public class ExplorerTest {
     };
 
     private Maze maze = new Maze(mazeArr);
-    private Explorer explorer = new Explorer();
-
-    @Before
-    public void before() {
-        explorer.exploreMaze(maze);
-    }
+    private Explorer explorer = new Explorer(maze);
 
     @Test
     public void explorerShouldBeAtStartPosition() {
@@ -56,6 +50,25 @@ public class ExplorerTest {
         setExplorerPosition('S', 3, 3);
         explorer.moveForward();
         assertPosition('S', 4, 3);
+    }
+
+    @Test
+    public void shouldMoveBackward() {
+        setExplorerPosition('N', 3, 3);
+        explorer.moveBackward();
+        assertPosition('N', 4, 3);
+
+        setExplorerPosition('E', 3, 3);
+        explorer.moveBackward();
+        assertPosition('E', 3, 2);
+
+        setExplorerPosition('W', 3, 3);
+        explorer.moveBackward();
+        assertPosition('W', 3, 4);
+
+        setExplorerPosition('S', 3, 3);
+        explorer.moveBackward();
+        assertPosition('S', 2, 3);
     }
 
     @Test
@@ -158,6 +171,12 @@ public class ExplorerTest {
 
         setExplorerPosition('N', 3, 4);
         assertEquals('S', explorer.getCharAtLeft());
+    }
+
+    @Test
+    public void shouldExploreMaze() {
+        explorer.exploreMaze();
+        assertEquals("SFFFFFFFFRFFFFFBBRFFFFFLFFFRFFFLFFFLFFFFFFFFRFLFFLFFFFFFFFFFFFLFFFFFFFFFFFFLFFFFFFFFFFFFE", explorer.getMovement());
     }
 
     private void setExplorerPosition(char orient, int x, int y) {
