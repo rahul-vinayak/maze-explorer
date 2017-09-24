@@ -1,0 +1,23 @@
+package excelian.maze;
+
+/**
+ * Created by rahul on 23/09/2017.
+ */
+public class Coordinates {
+
+    private final int x;
+    private final int y;
+
+    public Coordinates(int x, int y) {
+        this.x = x;
+        this.y = y;
+    }
+
+    public int getX() {
+        return x;
+    }
+
+    public int getY() {
+        return y;
+    }
+}
