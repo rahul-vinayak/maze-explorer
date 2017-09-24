@@ -51,8 +51,9 @@ public class Explorer {
                 moveBackward();
             }
         }
-        logger.debug("Finished exploring");
         movement.add('E');
+        logger.debug("Finished exploring");
+        logger.info("Movement taken: " + getMovementString());
     }
 
     public void start() {
