@@ -3,7 +3,6 @@ package excelian.maze;
 import org.apache.log4j.Logger;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -30,7 +29,7 @@ public class Explorer {
             } else if (getCharAtLeft() == ' ') {
                 turnLeft();
                 reverse = false;
-            } else if(getCharAtRight() == ' ') {
+            } else if (getCharAtRight() == ' ') {
                 turnRight();
                 reverse = false;
             } else {
@@ -45,33 +44,33 @@ public class Explorer {
     public void start() {
         Coordinates coordinates = maze.getStartCoordinates();
         moveTo(coordinates);
+        orientation = 'E';
         logger.debug("starting point");
         movement.add('S');
-        orientation = 'E';
     }
 
     public void moveForward() {
+        moveTo(getForwardCoordinates());
         logger.debug("moving forward");
         movement.add('F');
-        moveTo(getForwardCoordinates());
     }
 
     public void moveBackward() {
+        moveTo(getBackwardCoordinates());
         logger.debug("moving backward");
         movement.add('B');
-        moveTo(getBackwardCoordinates());
     }
 
     public void turnLeft() {
+        orientation = turn('L');
         logger.debug("turning left");
         movement.add('L');
-        orientation = turn('L');
     }
 
     public void turnRight() {
+        orientation = turn('R');
         logger.debug("turning right");
         movement.add('R');
-        orientation = turn('R');
     }
 
     public char getCharAtFront() {
@@ -110,7 +109,7 @@ public class Explorer {
         this.currX = currX;
     }
 
-    public String getMovement() {
+    public String getMovementString() {
         return movement
                 .stream()
                 .map(Object::toString)

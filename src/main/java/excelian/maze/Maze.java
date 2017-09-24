@@ -11,10 +11,6 @@ public class Maze {
         this.maze = maze;
     }
 
-    public char[][] getMaze() {
-        return maze;
-    }
-
     public int getWallsCount() {
         return (int) Arrays.stream(maze)
                 .map(CharBuffer::wrap)

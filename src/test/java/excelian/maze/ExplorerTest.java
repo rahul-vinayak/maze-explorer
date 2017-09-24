@@ -176,7 +176,7 @@ public class ExplorerTest {
     @Test
     public void shouldExploreMaze() {
         explorer.exploreMaze();
-        assertEquals("SFFFFFFFFRFFFFFBBRFFFFFLFFFRFFFLFFFLFFFFFFFFRFLFFLFFFFFFFFFFFFLFFFFFFFFFFFFLFFFFFFFFFFFFE", explorer.getMovement());
+        assertEquals("SFFFFFFFFRFFFFFBBRFFFFFLFFFRFFFLFFFLFFFFFFFFRFLFFLFFFFFFFFFFFFLFFFFFFFFFFFFLFFFFFFFFFFFFE", explorer.getMovementString());
     }
 
     private void setExplorerPosition(char orient, int x, int y) {

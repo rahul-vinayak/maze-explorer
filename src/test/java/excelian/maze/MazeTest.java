@@ -60,12 +60,12 @@ public class MazeTest {
     }
 
     @Test
-    public void assertSizeX() {
-        assertEquals(15, maze.getMaxX());
+    public void assertMaxX() {
+        assertEquals(14, maze.getMaxX());
     }
 
     @Test
-    public void assertSizeY() {
-        assertEquals(15, maze.getMaxY());
+    public void assertMaxY() {
+        assertEquals(14, maze.getMaxY());
     }
 }
